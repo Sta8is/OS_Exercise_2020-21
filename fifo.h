@@ -3,36 +3,35 @@
 #include "Gantt.h"
 typedef struct Process Process;
 typedef struct Gantt Gantt;
-Gantt* create_fifo(Process processes[5]){
-    Gantt* fifo;
-    Gantt* fifo2 = initGantt(fifo);
-    int j;
-    int count =0;
-    for(j = 0;j<5;j++){
-        Process process = processes[find_min_arrive_time(processes)];
-        //printf("%s",process.name);
-        int k; 
-        for(k = 0;k<process.finish_time-process.arrive_time;k++){
-            fifo = append(fifo2,process);
-            free(fifo2);
+Gantt create_fifo(Process *processes[5]){
+    Gantt fifo;
+    //fifo = initGantt(fifo);
+    int k,y;
+    //Bubble Sort for smaller arrive_time according to FIFO
+    bubble_sort(processes);
+    for(k=0;k<5;k++){
+        Process *currProcess = processes[k];
+        for(y=0;y<currProcess->finish_time;y++){
+            //Add specified Process to each time unit
+            strcat(fifo.diagram,currProcess->name);
+            strcat(fifo.diagram," ");
         }
+        //Free Memory
+        free(currProcess);
     }
     return fifo;
 }
-int find_min_arrive_time(Process lista[5]){
-    int exclude[5] = {10,10,10,10,10};
-    int min_index = 0;
-    int count = 0;
-    int i;
-    for (i = 0; i < 5; i++)
-    {
-       if(i == exclude[0] || i == exclude[1] || i == exclude[2] || i == exclude[3] || i == exclude[4]) continue; 
-       if(lista[i].arrive_time < min_index){
-           min_index = i;
-           exclude[count] = i;
-           count++;
-       }
+//Bubble Sort
+void bubble_sort(Process *lista[5]){
+    Process *temp;
+    int c,d;
+    for (c = 0 ; c < 5 - 1; c++){
+        for (d = 0 ; d < 5 - c - 1; d++){
+            if (lista[d]->arrive_time > lista[d+1]->arrive_time){
+                temp       = lista[d];
+                lista[d]   = lista[d+1];
+                lista[d+1] = temp;
+            }
+        }
     }
-    return min_index;
-
 }
