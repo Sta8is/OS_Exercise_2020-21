@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include "Process.h"
 #include <stdlib.h>
+#include <string.h>
 typedef struct Gantt{
     //Empty string for processes names
     char diagram[59];
