@@ -31,7 +31,7 @@ Gantt create_preemptive(Process *processes[5]){
 int exists(int times[],int search){
     int y;
     int size;
-    size = sizeof(times[])/sizeof(times[0]);
+    size = sizeof(times)/sizeof(times[0]);
     for(int y=0;y<size;y++){
         if(search == y){
             //Returns 1 if element exists in array
@@ -41,7 +41,7 @@ int exists(int times[],int search){
         else return 0;
     }
 }
-int produceTimeArray(Process o){
+int *produceTimeArray(Process o){
     int sizeOfArray = o.finish_time;
     int time[sizeOfArray];
     int k,start = o.arrive_time;
