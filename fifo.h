@@ -11,20 +11,18 @@
 //typedef struct Gantt Gantt;
 Gantt create_fifo(Process *processes[5]){
     Gantt fifo;
-    //fifo = initGantt(fifo);
-    //print_Gantt(fifo);
+    fifo = initGantt(fifo);
+    print_Gantt(fifo);
     int k,y;
     //Bubble Sort for smaller arrive_time according to FIFO
     bubble_sort(processes);
-    int count = 1;
     for(k=0;k<5;k++){
         Process *currProcess = processes[k];
         for(y=0;y<currProcess->finish_time;y++){
             //Add specified Process to each time unit
             strncat(fifo.diagram,currProcess->name,2);
-            count++;
             strncat(fifo.diagram," ",2);
-            count++;
+            //printf("%s \n",fifo.diagram);
         }
         //Free Memory
         free(currProcess);

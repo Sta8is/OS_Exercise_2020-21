@@ -15,6 +15,7 @@ Gantt create_preemptive(Process *processes[5]){
     int i,k,time=0;
     for(i = 0;i<5;i++){
         Process *currProcess = processes[i];
+        Process *holdProcess;
         for(k = 0;k<currProcess->finish_time;k++){
             if(processes[i+1]->arrive_time == time && processes[i+1]->priority < processes[i]->priority ){
                 currProcess = processes[i];

@@ -12,8 +12,9 @@ void print_Gantt(Gantt toPrint){
 }
 Gantt initGantt(Gantt old){
     int i;
-    for(i=0;i<60;i++){
+    /*for(i=0;i<60;i++){
         strncat(old.diagram,"",i);
-    }
+    }*/
+    old.diagram[0] = '\0';
     return old;
 }
