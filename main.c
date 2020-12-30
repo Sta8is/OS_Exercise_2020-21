@@ -1,5 +1,12 @@
 #include <stdio.h>
+#ifndef FIFO_H
+#define FIFO_H
 #include "fifo.h"
+#endif
+#ifndef PREEMPTIVE_H
+#define PREEMPTIVE_H
+#include "Preemptive.h"
+#endif
 int main(){
     Process *P1_p,*P2_p,*P3_p,*P4_p,*P5_p;
     Process P1,P2,P3,P4,P5;
@@ -31,11 +38,14 @@ int main(){
     Process *processes[5] = {P1_p,P2_p,P3_p,P4_p,P5_p};
     Gantt fifo;
     fifo = create_fifo(processes);
+    print_Gantt(fifo);
+    printf("\n");
+    Gantt preemptive;
+    //preemptive = create_preemptive(processes);
+    printf("\n");
     free(P1_p);
     free(P2_p);
     free(P3_p);
     free(P4_p);
     free(P5_p);
-    print_Gantt(fifo);
-    printf("\n");
 }

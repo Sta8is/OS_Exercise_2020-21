@@ -1,5 +1,8 @@
 #include <stdio.h>
+#ifndef PROCESS_H
+#define PROCESS_H
 #include "Process.h"
+#endif
 //Bubble Sort
 void bubble_sort(Process *lista[5]){
     Process *temp;
