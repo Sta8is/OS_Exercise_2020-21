@@ -1,0 +1,2 @@
+Preemptive Algorithm:
+ttps://japp.io/algorithms/os-scheduling/priority-scheduling-preemptive-algorithm-program-in-c-c/
