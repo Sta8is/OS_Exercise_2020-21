@@ -1,3 +1,3 @@
 Preemptive Algorithm:
 1) https://japp.io/algorithms/os-scheduling/priority-scheduling-preemptive-algorithm-program-in-c-c/
-2) https://cppsecrets.com/users/130697109105116981051151041169798575364103109971051084699111109/C00-Program-of-Priority-Schedulingpreemptive.php
+2) https://cppsecrets.com/users/130697109105116981051151041169798575364103109971051084699111109/C00-Program-of-Priority-Schedulingpreemptive.php  (Διαμόρφωση αυτού του κώδικα για εργασία)
