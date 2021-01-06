@@ -42,5 +42,5 @@ int main(){
     printf("\n");
     printf("PreE:|");
     preE = preEmptive(processes);
-    print_Gantt(preE);
+    //print_Gantt(preE);
 }
