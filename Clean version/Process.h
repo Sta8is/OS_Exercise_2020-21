@@ -4,6 +4,6 @@ typedef struct Process
 {
     char name[2];
 	int arrive_time;
-    int finish_time;
+    int burst_time;
     int priority;
 }Process;
