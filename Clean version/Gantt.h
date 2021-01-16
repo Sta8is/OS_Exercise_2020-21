@@ -5,6 +5,10 @@
 #define PROCESS_H
 #include "Process.h"
 #endif
+#ifndef READY_QUEUE_H
+#define READY_QUEUE _H
+#include "ReadyQueue.h"
+#endif
 typedef struct Gantt{
     //Empty array of processes(Number 20 because of the total sum of time)
     Process states[20];
@@ -20,6 +24,7 @@ typedef struct Gantt{
     int response_times[5];
     //Name of algorithm used for print function later
     char algorithm_name[5];
+    ReadyQueue queues[20];
 }Gantt;
 void print_Gantt(Gantt toPrint){
     printf("Time:0    1    2    3    4    5    6    7    8    9    10   11   12   13   14   15   16   17   18   19   20\n");
@@ -30,6 +35,22 @@ void print_Gantt(Gantt toPrint){
     int y,k,z,e,t,u;
     for(y=0;y<20;y++){
         printf(" %s |",toPrint.states[y].name);
+    }
+    printf("\n");
+    //Print ReadyQueues
+    printf("\nReady Queue:\n");
+    int o,l;
+    for(o=0;o<5;o++){
+        printf("|");
+        for(l=0;l<20;l++){
+            //if(strcmp(toPrint.queues[l].processes_waiting[o].name,"-")!=0){
+            printf(" %s  | ",toPrint.queues[l].processes_waiting[o].name);
+            //}
+            //else{
+            //    printf("  -  |");
+           // }
+        }
+        printf("\n");
     }
     //Print first row with process's names
     printf("\n\n| Time |");
@@ -64,4 +85,12 @@ void print_Gantt(Gantt toPrint){
         printf("  %d   |",toPrint.number_of_changes[t]);
     }
     printf("\n\n");
+   
+}
+Gantt initGantt(Gantt toInit){
+    int r;
+    for(r=0;r<20;r++){
+        toInit.queues[r] = initializeQueue(toInit.queues[r]);
+    }
+    return toInit;
 }
