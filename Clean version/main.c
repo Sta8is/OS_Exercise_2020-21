@@ -33,20 +33,12 @@ int main(){
     strcpy(P5.name,"P5");
     
     Process processes[5] = {P1,P2,P3,P4,P5};
-    //printf("     |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |\n");
     Gantt fifo,preE;
     //Create fifo-type gantt
     fifo = create_fifo(processes);
     //Print gantt chart with extra timetable
     print_Gantt(fifo);
-    //printReadyQueue(fifo.queues[0]);
-    printf("test");
-    ReadyQueue test;
-    test = initializeQueue(test);
-    //printReadyQueue(test);
-    printf("%s",fifo.queues[0].processes_waiting[0].name);
-    printf(" saf %s",test.processes_waiting[0].name);
     preE = preEmptive(processes);
-    //print_Gantt(preE);
+    print_Gantt(preE);
 
 }

@@ -10,6 +10,8 @@
 Gantt preEmptive(Process listap[5]){
     Gantt tmp;
     strcpy(tmp.algorithm_name,"preE");
+    //Initialize gantt chart
+    tmp = initGantt(tmp);
     //Initalize all necessary variables for loops
     int count = 0,time,smallest,i,k,end,total_count=0;
     //Initalize arrays of arrive,burst times and priorities
@@ -37,7 +39,26 @@ Gantt preEmptive(Process listap[5]){
                 }
             }
         }
-        if(previous != smallest) number_changes[smallest]++;
+        strcpy(tmp.cpus[smallest].processes[time].name,"U");
+        for(k = 0;k<5;k++){
+            if(k !=smallest && arrive_times[k]<=time && burst_times[k] != 0){
+                tmp.queues[time] = addProcessToQueueFifo(listap[k],tmp.queues[time]);
+                strcpy(tmp.cpus[k].processes[time].name,"W");
+            }
+        }
+        tmp.queues[time] = sortPriorityFirst(tmp.queues[time]);
+        if(previous != smallest){
+            number_changes[smallest]++;
+            //strcpy(tmp.cpus[smallest].processes[time].name,"S");
+            //tmp.queues[time] = swapProcesses(listap[smallest],tmp.queues[time]);
+        }
+        int u;
+        for(u=0;u<5;u++){
+            if (u != smallest && arrive_times[u] <= time && first_times[u] >= 0 && burst_times[u] != 0){
+                strcpy(tmp.cpus[u].processes[time].name,"S");
+            }
+            
+        }
         //Decrease burst time of current process to be able to calculate if its done or not
         burst_times[smallest]--;
         //Set current process to that of smallest arrive time and highest priority

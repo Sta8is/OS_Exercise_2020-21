@@ -9,6 +9,10 @@
 #define READY_QUEUE _H
 #include "ReadyQueue.h"
 #endif
+#ifndef VIRTUAL_CPU_H
+#define VIRTUAL_CPU_H
+#include "virtualCPU.h"
+#endif
 typedef struct Gantt{
     //Empty array of processes(Number 20 because of the total sum of time)
     Process states[20];
@@ -25,6 +29,7 @@ typedef struct Gantt{
     //Name of algorithm used for print function later
     char algorithm_name[5];
     ReadyQueue queues[20];
+    virtualCPU cpus[5];
 }Gantt;
 void print_Gantt(Gantt toPrint){
     printf("Time:0    1    2    3    4    5    6    7    8    9    10   11   12   13   14   15   16   17   18   19   20\n");
@@ -43,12 +48,17 @@ void print_Gantt(Gantt toPrint){
     for(o=0;o<5;o++){
         printf("|");
         for(l=0;l<20;l++){
-            //if(strcmp(toPrint.queues[l].processes_waiting[o].name,"-")!=0){
             printf(" %s  | ",toPrint.queues[l].processes_waiting[o].name);
-            //}
-            //else{
-            //    printf("  -  |");
-           // }
+        }
+        printf("\n");
+    }
+    //Print Virtual CPUS
+    printf("\nVirtual CPUs:\n");
+    int first,w;
+    for(first=0;first<5;first++){
+        printf("Virtual CPU %s: |",toPrint.different_processes[first].name);
+        for(w=0;w<20;w++){
+            printf("  %s  |",toPrint.cpus[first].processes[w].name);
         }
         printf("\n");
     }
@@ -91,6 +101,10 @@ Gantt initGantt(Gantt toInit){
     int r;
     for(r=0;r<20;r++){
         toInit.queues[r] = initializeQueue(toInit.queues[r]);
+    }
+    int t;
+    for(t=0;t<5;t++){
+        toInit.cpus[t] = initVirtualCPU(toInit.cpus[t]);
     }
     return toInit;
 }

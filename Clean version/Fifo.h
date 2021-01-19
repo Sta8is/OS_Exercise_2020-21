@@ -45,6 +45,7 @@ Gantt create_fifo(Process processes[5]){
         for(y=0;y<currProcess.burst_time;y++){
             //Add specified Process to each time unit
             fifo.states[count] = currProcess;
+            strcpy(fifo.cpus[k].processes[count].name,"U");
             //Increase time unit(Max:20 see Gantt)
             int t;
             if(count != 0) fifo.queues[count] = fifo.queues[count - 1];
@@ -58,8 +59,13 @@ Gantt create_fifo(Process processes[5]){
                     fifo.queues[count] = fifo.queues[count - 1];
                 }*/
             }
+            int z;
+            for(z=k+1;z<5;z++){
+                if(searchQueue(fifo.queues[count],processes[z]) == 1){
+                    strcpy(fifo.cpus[z].processes[count].name,"W"); 
+                }
+            }
             count = count +1;
-            
         }
     }
     //Return struct(Gantt) fifo
