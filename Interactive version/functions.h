@@ -4,7 +4,7 @@
 #include "Process.h"
 #endif
 //Bubble Sort
-void bubble_sort(Process lista[5],int number){
+void bubble_sort(Process lista[],int number){
     //VOID FUNCTION DOESNT RETURN ANYTHING, USE IT THEN REUSE THE ARRAY YOU WANT
 
 

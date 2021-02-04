@@ -40,7 +40,7 @@ Gantt create_fifo(Process processes[],int numberOfProcesses){
             fifo.ta_times[k] = completion_time - processes[k].arrive_time;
         }
         //Calculating response time (same with waiting time in fifo)
-        fifo.response_times[k] = fifo.waiting_times[k];
+        //fifo.response_times[k] = fifo.waiting_times[k];
         //For loop to complete gantt chart
         for(y=0;y<currProcess.burst_time;y++){
             //Add specified Process to each time unit

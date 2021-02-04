@@ -21,13 +21,13 @@ typedef struct Gantt{
     //Each individual process used
     Process *different_processes;
     //Waiting time of each process
-    int waiting_times[50];
+    int *waiting_times;
     //Turn-around time of each process
-    int ta_times[50];
+    int *ta_times;
     //Number of changes each process has through each algorithm
-    int number_of_changes[50];
+    int *number_of_changes;
     //Response time of each process
-    int response_times[50];
+    //int response_times[50];
     //Name of algorithm used for print function later
     char algorithm_name[5];
     ReadyQueue *queues;
@@ -93,10 +93,10 @@ void print_Gantt(Gantt toPrint){
         else printf("  %d   |",toPrint.ta_times[e]);
     }
     //Print fourth row containing response times
-    printf("\n|  RT  |");
-    for(u=0;u<toPrint.numberOfProcesses;u++){
+    //printf("\n|  RT  |");
+    /*for(u=0;u<toPrint.numberOfProcesses;u++){
         printf("  %d   |",toPrint.response_times[u]);
-    }
+    }*/
     //Print fifth row containg number of changes
     printf("\n|  NC  |");
     for(t=0;t<toPrint.numberOfProcesses;t++){
@@ -104,10 +104,22 @@ void print_Gantt(Gantt toPrint){
     }
     printf("\n\n");
 
+    /*free(toPrint.queues);
+    free(toPrint.states);
+    free(toPrint.cpus);
+    free(toPrint.ta_times);
+    free(toPrint.waiting_times);
+    free(toPrint.number_of_changes);*/
 }
 Gantt initGantt(Gantt toInit,int noProcesses,Process processes[]){
     //Setting number of processes to the number given by the user
     toInit.numberOfProcesses = noProcesses;
+    toInit.waiting_times = malloc(noProcesses*sizeof(int));
+    //memset(toInit.waiting_times,0,noProcesses);
+    toInit.ta_times = malloc(noProcesses*sizeof(int));
+    memset(toInit.ta_times,0,noProcesses);
+    toInit.number_of_changes = malloc(noProcesses*sizeof(int));
+    memset(toInit.number_of_changes,0,noProcesses);
     //Malloc memory for different processes
     toInit.different_processes = malloc(noProcesses*sizeof(Process));
     int r,y,t,x;
@@ -116,7 +128,10 @@ Gantt initGantt(Gantt toInit,int noProcesses,Process processes[]){
         //Entering all different processes used
         toInit.different_processes[t] = processes[t];
         //Calculating total runtime of all processes
-        toInit.totalTime = toInit.totalTime + toInit.different_processes[t].burst_time;
+        toInit.totalTime = toInit.totalTime + processes[t].burst_time;
+        toInit.waiting_times[t] = 0;
+        toInit.ta_times[t] = 0;
+        toInit.number_of_changes[t] = 0;
     }
     //Malloc memory for virtual cpus,states of Gantt and ready queues of all time units
     toInit.cpus = malloc(noProcesses*sizeof(virtualCPU));

@@ -7,6 +7,10 @@
 #define PREEMPTIVE_H
 #include "Preemptive.h"
 #endif
+#ifndef ROUNDROBIN_H
+#define ROUNDROBIN_H
+#include "RoundRobin.h"
+#endif
 int main(){
     //Initialize empty processes
     int numberOfProcesses;
@@ -17,24 +21,27 @@ int main(){
     arxiko = malloc(numberOfProcesses*sizeof(Process));
     memset(arxiko,0,numberOfProcesses);
     for(count = 0; count<numberOfProcesses;count++){
-        printf("\nEnter name of process:");
+        printf("Enter name of process:");
         int length;
         char name[3];
         scanf("%s",&name);
         length = sizeof(name)/sizeof(name[0]);
         arxiko[count].name = malloc(length*sizeof(char));
         strcpy(arxiko[count].name,name);
-        printf("\nEnter arrive time of process:");
-        scanf("%d",&arxiko[count].arrive_time);
-        printf("\nEnter burst time of process:");
-        scanf("%d",&arxiko[count].burst_time);
-        printf("Enter priority of process:");
-        scanf("%d",&arxiko[count].priority);
+        printf("Enter arrive,burst time and priority of %s: ",arxiko[count].name);
+        scanf("%d %d %d",&arxiko[count].arrive_time,&arxiko[count].burst_time,&arxiko[count].priority);
     }
+    int timeQuantum;
+    printf("Enter time quantum:");
+    scanf("%d",&timeQuantum);
     Gantt fifo;
     fifo = create_fifo(arxiko,numberOfProcesses);
     print_Gantt(fifo);
     Gantt preE;
     preE = preEmptive(arxiko,numberOfProcesses);
     print_Gantt(preE);
+    Gantt roro;
+    roro = createRoundRobin(arxiko,numberOfProcesses,timeQuantum);
+    print_Gantt(roro);
+    printf("Test");
 }
