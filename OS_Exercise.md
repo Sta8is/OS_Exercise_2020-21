@@ -56,21 +56,23 @@ $$
 | :------------------: | :-----: | :---: | :-------------------: | :------: | :-----: |
 | Χρόνος Διακπεραίωσης | 11-0=11 | 7-1=6 |        16-3=13        | 20-9=11  | 15-12=3 |
 |   Χρόνος Αναμονής    | (7-1)=6 |   0   | (11-3)+(15-12)=8+3=11 | (16-9)=7 |    0    |
-|  Αριθμός εναλλαγών   |    1    |   0   |           1           |    0     |    0    |
+|  Αριθμός εναλλαγών   |    0    |   0   |           1           |    0     |    0    |
 
 ### Shortest Remaining Time First (SRTF)
 
 This Algorithm is the **preemptive version** of **SJF(Sortest Job First) scheduling**. In SRTF, the execution of the process can be stopped after certain amount of time. At the arrival of every process, the short term scheduler schedules the process with the least remaining burst time among the list of available processes and the running process.
 
+If burst times of 2 processes are the same, the process which will be executed is the one with higher priority
+
 | Gantt |  1   |  2   |  3   |  4   |  5   |  6   |  7   |  8   |  9   | 10   |  11  | 12   |  13  |  14  |  15  |  16  |  17  |  18  |  19  |  20  |
 | ----- | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: | ---- | :--: | ---- | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :--: |
 |       |  P1  |  P1  |  P1  |  P1  |  P1  |  P3  |  P3  |  P2  |  P2  | P2   |  P2  | P2   |  P2  |  P5  |  P5  |  P5  |  P4  |  P4  |  P4  |  P4  |
 
-|                      |  P1   |  P2  |  P3  |  P4  |  P5  |
-| :------------------: | :---: | :--: | :--: | :--: | :--: |
-| Χρόνος Διακπεραίωσης | 5-0=0 |  σ   |      |      |      |
-|   Χρόνος Αναμονής    |       |      |      |      |      |
-|  Αριθμός εναλλαγών   |       |      |      |      |      |
+|                      |  P1   |    P2     |   P3    |    P4    |     P5     |
+| :------------------: | :---: | :-------: | :-----: | :------: | :--------: |
+| Χρόνος Διακπεραίωσης | 5-0=5 |  13-1=12  |  7-3=4  | 20-9=11  |  16-12=4   |
+|   Χρόνος Αναμονής    |   0   | (7-1) = 6 | (5-3)=2 | (16-9)=7 | (13-12)= 1 |
+|  Αριθμός εναλλαγών   |   0   |     0     |    0    |    0     |     0      |
 
 ### Round Robin (RR)
 
