@@ -18,7 +18,7 @@ Gantt create_srtf(Process processes[],int numberOfProcesses)
     //Sorting from smallest to highest arrival time
     bubble_sort(processes,numberOfProcesses);
     int time;
-    int arrive_times[numberOfProcesses],burst_times[numberOfProcesses],priorities[numberOfProcesses],first_times[numberOfProcesses],number_changes[numberOfProcesses];
+    int arrive_times[numberOfProcesses],burst_times[numberOfProcesses+1],priorities[numberOfProcesses+1],first_times[numberOfProcesses],number_changes[numberOfProcesses];
     for(k=0;k<numberOfProcesses;k++)
     {
         arrive_times[k] = processes[k].arrive_time;
@@ -36,35 +36,28 @@ Gantt create_srtf(Process processes[],int numberOfProcesses)
         int shortest = numberOfProcesses;
         for(i=0; i<numberOfProcesses; i++)
         {
-            
             //Check for smallest arrive time and if it has shortest burst time. also check burst_time > 0 so the process isnt over yet
             if(arrive_times[i]<=time && burst_times[i]>0 )
             {   
+                //check if ne
                 if(burst_times[i]<burst_times[shortest])
                 {
                     shortest = i;
-                    if(first_times[shortest] <0) 
-                    {
-                    //Initialize first time process entered cpu and set number of changes to zero
-                    first_times[shortest] = time;
-                    number_changes[shortest] = 0;
-                    }
                 }
                 // if burst times are the same
                 if(burst_times[i] == burst_times[shortest])
                 {
                     if(priorities[i]>priorities[shortest])
                     shortest = i ;
-                    if(first_times[shortest] <0) 
-                    {
-                    //Initialize first time process entered cpu and set number of changes to zero
-                    first_times[shortest] = time;
-                    number_changes[shortest] = 0;
-                    }
                 }
-
             }
         }
+        if(first_times[shortest] <0) 
+        {
+        //Initialize first time process entered cpu and set number of changes to zero
+        first_times[shortest] = time;
+        number_changes[shortest] = 0;
+        } 
         //Copy to virtualCPU letter U for Using
         strcpy(temp.cpus[shortest].processes[time].name,"U");
         int index = 0;
@@ -94,7 +87,7 @@ Gantt create_srtf(Process processes[],int numberOfProcesses)
         //Decrease burst time of current process to be able to calculate if its done or not
         burst_times[shortest]--;
         //Set current process to that of shortest arrive time and shortest burst time
-        strcpy(temp.states[time].name,processes[shortest].name);
+        strcpy(temp.states[time].name, processes[shortest].name);
         //Increase total_count to enter a new time value(Max:20 see Gantt struct)
         total_count++;
         if(burst_times[shortest]==0)
