@@ -7,10 +7,10 @@
 #define FUNCTIONS_H
 #include "functions.h"
 #endif
-Gantt preEmptive(Process listap[],int numberOfProcesses){
+Gantt preEmptive(Process processes[],int numberOfProcesses){
     Gantt tmp;
     //Initialize gantt chart
-    tmp = initGantt(tmp,numberOfProcesses,listap);
+    tmp = initGantt(tmp,numberOfProcesses,processes);
     strcpy(tmp.algorithm_name,"preE");
     //Initialize all necessary variables for loops
     int count = 0,time,smallest,i,k,end,total_count=0;
@@ -18,9 +18,9 @@ Gantt preEmptive(Process listap[],int numberOfProcesses){
     int arrive_times[numberOfProcesses],burst_times[numberOfProcesses],priorities[numberOfProcesses+1],first_times[numberOfProcesses],number_changes[numberOfProcesses];
     //Create array of arrive,burst times and priorities for each process
     for(k=0;k<numberOfProcesses;k++){
-        arrive_times[k] = listap[k].arrive_time;
-        burst_times[k] = listap[k].burst_time;
-        priorities[k] = listap[k].priority;
+        arrive_times[k] = processes[k].arrive_time;
+        burst_times[k] = processes[k].burst_time;
+        priorities[k] = processes[k].priority;
         first_times[k] = -1;
     }
     //Setting lowest Priority
@@ -45,8 +45,8 @@ Gantt preEmptive(Process listap[],int numberOfProcesses){
         int index = 0;
         for(k = 0;k<numberOfProcesses;k++){
             if(k !=smallest && arrive_times[k]<=time && burst_times[k] != 0 && first_times[k] < 0){
-                strcpy(tmp.queues[time].processes_waiting[index].name,listap[k].name);
-                tmp.queues[time].processes_waiting[index].priority = listap[k].priority;
+                strcpy(tmp.queues[time].processes_waiting[index].name,processes[k].name);
+                tmp.queues[time].processes_waiting[index].priority = processes[k].priority;
                 //Increment index
                 index++;
                 //Copy to virtualCPU letter W for Waiting
@@ -61,8 +61,8 @@ Gantt preEmptive(Process listap[],int numberOfProcesses){
         int u;
         for(u=0;u<numberOfProcesses;u++){
             if (u != smallest && arrive_times[u] <= time && first_times[u] >= 0 && burst_times[u] != 0){
-                strcpy(tmp.queues[time].processes_waiting[index].name,listap[u].name);
-                tmp.queues[time].processes_waiting[index].priority = listap[u].priority;
+                strcpy(tmp.queues[time].processes_waiting[index].name,processes[u].name);
+                tmp.queues[time].processes_waiting[index].priority = processes[u].priority;
                 //Increment index
                 index++;
                 //Copy to virtualCPU letter S for Sleeping
@@ -73,7 +73,7 @@ Gantt preEmptive(Process listap[],int numberOfProcesses){
         //Decrease burst time of current process to be able to calculate if its done or not
         burst_times[smallest]--;
         //Set current process to that of smallest arrive time and highest priority
-        strcpy(tmp.states[time].name,listap[smallest].name);
+        strcpy(tmp.states[time].name,processes[smallest].name);
         //Sort queue to highest priority
         int c,d;
         for (c = 0 ; c < numberOfProcesses - 1; c++){
@@ -100,7 +100,7 @@ Gantt preEmptive(Process listap[],int numberOfProcesses){
             end=time+1;
             //Calculate times of each process
             tmp.ta_times[smallest] = end - arrive_times[smallest];
-            tmp.waiting_times[smallest] = tmp.ta_times[smallest] - listap[smallest].burst_time;
+            tmp.waiting_times[smallest] = tmp.ta_times[smallest] - processes[smallest].burst_time;
             tmp.number_of_changes[smallest] = number_changes[smallest] -1;
         }
         //Update previous process to keep number of process changes
