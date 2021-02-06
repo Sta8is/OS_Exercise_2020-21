@@ -65,10 +65,12 @@ Gantt create_srtf(Process processes[],int numberOfProcesses)
         {
             if(k !=shortest && arrive_times[k]<=time && burst_times[k] != 0){
                 //Add to queue "waiting" process and its remaining burst_time(Later used in sorting)
-                strcpy(temp.queues[time].processes_waiting[index].name, processes[k].name);
-                temp.queues[time].processes_waiting[index].burst_time = burst_times[k];
-                //Increment index of current time unit
-                index++;
+                if(searchQueue(temp.queues[time],processes[k],numberOfProcesses) == 0){
+                    strcpy(temp.queues[time].processes_waiting[index].name, processes[k].name);
+                    temp.queues[time].processes_waiting[index].burst_time = burst_times[k];
+                    //Increment index of current time unit
+                    index++;
+                }
                 //Copying letter "W" for waiting in virtualCPU
                 strcpy(temp.cpus[k].processes[time].name,"W");
             }
@@ -84,10 +86,12 @@ Gantt create_srtf(Process processes[],int numberOfProcesses)
             if (u != shortest && arrive_times[u] <= time && first_times[u] >= 0 && burst_times[u] != 0)
             {
                 //Add to queue "sleeping" process and its remaining burst_time(Later used in sorting)
-                strcpy(temp.queues[time].processes_waiting[index].name, processes[u].name);
-                temp.queues[time].processes_waiting[index].burst_time = burst_times[u];
-                //Increment index of current time unit
-                index++;
+                if(searchQueue(temp.queues[time],processes[u],numberOfProcesses) == 0){
+                    strcpy(temp.queues[time].processes_waiting[index].name, processes[u].name);
+                    temp.queues[time].processes_waiting[index].burst_time = burst_times[u];
+                    //Increment index of current time unit
+                    index++;
+                }
                 //Copying letter "S" for sleeping in virtualCPU
                 strcpy(temp.cpus[u].processes[time].name,"S");
             }
@@ -99,22 +103,23 @@ Gantt create_srtf(Process processes[],int numberOfProcesses)
         {
             for (d = 0 ; d < numberOfProcesses - c - 1; d++)
             {
-                //Empty temp character to store name
-                char tempChar[3] = "";
-                int tempBurst;
-                if (temp.queues[time].processes_waiting[d].burst_time > temp.queues[time].processes_waiting[d+1].burst_time)
-                {
-                    //Swapping processes
-                    /*tempBurst = temp.queues[time].processes_waiting[d].burst_time;
-                    temp.queues[time].processes_waiting[d].burst_time = temp.queues[time].processes_waiting[d+1].burst_time;
-                    temp.queues[time].processes_waiting[d+1].burst_time = tempBurst;*/
-                    strcpy(tempChar,temp.queues[time].processes_waiting[d].name);
-                    strcpy(temp.queues[time].processes_waiting[d].name,temp.queues[time].processes_waiting[d+1].name);
-                    strcpy(temp.queues[time].processes_waiting[d+1].name,tempChar);
+                if(temp.queues[time].processes_waiting[d].burst_time != 0 && temp.queues[time].processes_waiting[d+1].burst_time != 0){
+                    //Empty temp character to store name
+                    char tempChar[3] = "";
+                    int tempBurst;
+                    if (temp.queues[time].processes_waiting[d].burst_time > temp.queues[time].processes_waiting[d+1].burst_time)
+                    {
+                        //Swapping processes
+                        tempBurst = temp.queues[time].processes_waiting[d].burst_time;
+                        temp.queues[time].processes_waiting[d].burst_time = temp.queues[time].processes_waiting[d+1].burst_time;
+                        temp.queues[time].processes_waiting[d+1].burst_time = tempBurst;
+                        strcpy(tempChar,temp.queues[time].processes_waiting[d].name);
+                        strcpy(temp.queues[time].processes_waiting[d].name,temp.queues[time].processes_waiting[d+1].name);
+                        strcpy(temp.queues[time].processes_waiting[d+1].name,tempChar);
+                    }
                 }
             }
         }
-
         //Decrease burst time of current process to be able to calculate if its done or not
         burst_times[shortest]--;
         //Set current process to that of shortest arrive time and shortest burst time
