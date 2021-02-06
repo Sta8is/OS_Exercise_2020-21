@@ -11,10 +11,10 @@
 #define ROUNDROBIN_H
 #include "RoundRobin.h"
 #endif
-#ifndef srtf_H
-#define srtf_H
+#ifndef SRTF_H
+#define SRTF_H
 #include "srtf.h"
-#endif
+#endif // SRTF_H
 int main(){
     //Initialize empty processes
     int numberOfProcesses;
@@ -35,20 +35,19 @@ int main(){
         printf("Enter arrive,burst time and priority of %s: ",arxiko[count].name);
         scanf("%d %d %d",&arxiko[count].arrive_time,&arxiko[count].burst_time,&arxiko[count].priority);
     }
-    //int timeQuantum;
-    //printf("Enter time quantum:");
-    //scanf("%d",&timeQuantum);
+    int timeQuantum;
+    printf("Enter time quantum:");
+    scanf("%d",&timeQuantum);
     Gantt fifo;
     fifo = create_fifo(arxiko,numberOfProcesses);
     print_Gantt(fifo);
     Gantt preE;
     preE = preEmptive(arxiko,numberOfProcesses);
     print_Gantt(preE);
-    //Gantt roro;
-    //roro = createRoundRobin(arxiko,numberOfProcesses,timeQuantum);
-    //print_Gantt(roro);
+    Gantt roro;
+    roro = createRoundRobin(arxiko,numberOfProcesses,timeQuantum);
+    print_Gantt(roro);
     Gantt SRTF;
     SRTF = create_srtf(arxiko,numberOfProcesses);
     print_Gantt(SRTF);
-    printf("Test");
 }

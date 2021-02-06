@@ -6,8 +6,6 @@
 //Bubble Sort
 void bubble_sort(Process lista[],int number){
     //VOID FUNCTION DOESNT RETURN ANYTHING, USE IT THEN REUSE THE ARRAY YOU WANT
-
-
     //Initialize empty struct(Process) temp
     Process temp;
     //Initialize variables for loops

@@ -12,7 +12,7 @@ Gantt create_fifo(Process processes[],int numberOfProcesses){
     Gantt fifo;
     fifo = initGantt(fifo,numberOfProcesses,processes);
     strcpy(fifo.algorithm_name,"FCFS");
-   //intialize variables for loops
+    //Initialize variables for loops
     int k,y,count = 0;
     //Bubble Sort for smaller arrive_time according to FIFO
     bubble_sort(processes,numberOfProcesses);
@@ -26,8 +26,6 @@ Gantt create_fifo(Process processes[],int numberOfProcesses){
     for(k=0;k<numberOfProcesses;k++){
         //Set currProcess to each process of the sorted array
         Process currProcess = processes[k];
-        //FIll out array with all the different processes used
-        //fifo.different_processes[k] = currProcess;
         //Calculating number of changes for each process (in fifo all of them is 0)
         fifo.number_of_changes[k] = 0;
         //Calculation of specific times needed
@@ -39,30 +37,35 @@ Gantt create_fifo(Process processes[],int numberOfProcesses){
             //Calculating turn-around time based of current process' completion time
             fifo.ta_times[k] = completion_time - processes[k].arrive_time;
         }
-        //Calculating response time (same with waiting time in fifo)
-        //fifo.response_times[k] = fifo.waiting_times[k];
         //For loop to complete gantt chart
         for(y=0;y<currProcess.burst_time;y++){
             //Add specified Process to each time unit
             fifo.states[count] = currProcess;
+            //Update value of virtualCPU to U for using
             strcpy(fifo.cpus[k].processes[count].name,"U");
-            //Increase time unit(Max:20 see Gantt)
+            //Increment time unit
             int t;
             int index = 0;
+            //Procedure for remaining processes
             for(t=k+1;t<numberOfProcesses;t++){
                 if(count >= processes[t].arrive_time){
+                    //Add process to queue
                     strcpy(fifo.queues[count].processes_waiting[index].name,processes[t].name);
+                    //Increment index
                     index++;
                 }
 
             }
             int z;
+            //Procedure for rest processes
             for(z=k+1;z<numberOfProcesses;z++){
+                //Search queue for other processes
                 if(searchQueue(fifo.queues[count],processes[z],numberOfProcesses) == 1){
+                    //Update value of virtualCPU to W for waiting
                     strcpy(fifo.cpus[z].processes[count].name,"W");
                 }
             }
-            count = count +1;
+            count++;
 
         }
 

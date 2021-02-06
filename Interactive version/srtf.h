@@ -8,7 +8,7 @@
 #include "functions.h"
 #endif
 Gantt create_srtf(Process processes[],int numberOfProcesses)
-{   
+{
     Gantt temp;
     //Initializing empty gantt chart for srtf algorithm
     temp = initGantt(temp,numberOfProcesses,processes);
@@ -31,14 +31,14 @@ Gantt create_srtf(Process processes[],int numberOfProcesses)
     priorities[numberOfProcesses] = 0;
     int previous = 5;
     for(time=0; count<numberOfProcesses; time++)
-    {   
+    {
         //index of priority with shortest remaining time
         int shortest = numberOfProcesses;
         for(i=0; i<numberOfProcesses; i++)
         {
             //Check for smallest arrive time and if it has shortest burst time. also check burst_time > 0 so the process isnt over yet
             if(arrive_times[i]<=time && burst_times[i]>0 )
-            {   
+            {
                 //check if ne
                 if(burst_times[i]<burst_times[shortest])
                 {
@@ -52,21 +52,24 @@ Gantt create_srtf(Process processes[],int numberOfProcesses)
                 }
             }
         }
-        if(first_times[shortest] <0) 
+        if(first_times[shortest] <0)
         {
         //Initialize first time process entered cpu and set number of changes to zero
         first_times[shortest] = time;
         number_changes[shortest] = 0;
-        } 
+        }
         //Copy to virtualCPU letter U for Using
         strcpy(temp.cpus[shortest].processes[time].name,"U");
         int index = 0;
         for(k = 0;k<numberOfProcesses;k++)
         {
             if(k !=shortest && arrive_times[k]<=time && burst_times[k] != 0){
+                //Add to queue "waiting" process and its remaining burst_time(Later used in sorting)
                 strcpy(temp.queues[time].processes_waiting[index].name, processes[k].name);
+                temp.queues[time].processes_waiting[index].burst_time = burst_times[k];
+                //Increment index of current time unit
                 index++;
-                //Copy to virtualCPU letter W for Waiting
+                //Copying letter "W" for waiting in virtualCPU
                 strcpy(temp.cpus[k].processes[time].name,"W");
             }
         }
@@ -79,9 +82,33 @@ Gantt create_srtf(Process processes[],int numberOfProcesses)
         for(u=0;u<numberOfProcesses;u++)
         {
             if (u != shortest && arrive_times[u] <= time && first_times[u] >= 0 && burst_times[u] != 0){
+                //Add to queue "sleeping" process and its remaining burst_time(Later used in sorting)
+                strcpy(temp.queues[time].processes_waiting[index].name, processes[u].name);
+                temp.queues[time].processes_waiting[index].burst_time = burst_times[u];
+                //Increment index of current time unit
+                index++;
+                //Copying letter "S" for sleeping in virtualCPU
                 strcpy(temp.cpus[u].processes[time].name,"S");
             }
 
+        }
+        //Bubble sort based on smallest burst time
+        int c,d;
+        for (c = 0 ; c < numberOfProcesses - 1; c++){
+            for (d = 0 ; d < numberOfProcesses - c - 1; d++){
+                //Empty temp character to store name
+                char tempChar[3] = "";
+                int tempBurst;
+                if (temp.queues[time].processes_waiting[d].burst_time > temp.queues[time].processes_waiting[d+1].burst_time){
+                    //Swapping processes
+                    /*tempBurst = temp.queues[time].processes_waiting[d].burst_time;
+                    temp.queues[time].processes_waiting[d].burst_time = temp.queues[time].processes_waiting[d+1].burst_time;
+                    temp.queues[time].processes_waiting[d+1].burst_time = tempBurst;*/
+                    strcpy(tempChar,temp.queues[time].processes_waiting[d].name);
+                    strcpy(temp.queues[time].processes_waiting[d].name,temp.queues[time].processes_waiting[d+1].name);
+                    strcpy(temp.queues[time].processes_waiting[d+1].name,tempChar);
+                }
+            }
         }
 
         //Decrease burst time of current process to be able to calculate if its done or not
