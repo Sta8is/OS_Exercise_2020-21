@@ -10,3 +10,5 @@ Preemptive Algorithm:
 8)https://www.guru99.com/priority-scheduling-program.html      (preemtive)
 9)https://www.geeksforgeeks.org/introduction-of-shortest-remaining-time-first-srtf-algorithm/     
 10) https://cppsecrets.com/users/130697109105116981051151041169798575364103109971051084699111109/C00-Program-of-Shortest-Remaining-Time-FirstSRTF-Scheduling.php   κώδικας για srtf
+11)https://openclass.teiwm.gr/modules/document/file.php/EE104/%CE%95%CE%BD%CF%8C%CF%84%CE%B7%CF%84%CE%B1%205.%20%CE%94%CE%B9%CE%B5%CF%81%CE%B3%CE%B1%CF%83%CE%AF%CE%B5%CF%82%20%CE%99%CE%99%CE%99.pdf
+12)http://www.eng.ucy.ac.cy/christos/courses/ece313/Lectures/Scheduling.pdf
