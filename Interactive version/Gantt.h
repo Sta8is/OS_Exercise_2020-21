@@ -13,7 +13,8 @@
 #define VIRTUAL_CPU_H
 #include "virtualCPU.h"
 #endif
-typedef struct Gantt{
+typedef struct Gantt
+{
     int numberOfProcesses;
     int totalTime;
     //Empty array of processes(Number 20 because of the total sum of time)
@@ -34,11 +35,13 @@ typedef struct Gantt{
     virtualCPU *cpus;
 }Gantt;
 //Function to print Gantt chart
-void print_Gantt(Gantt toPrint){
+void print_Gantt(Gantt toPrint)
+{
     //Print Time Units
     printf("Time:");
     int time;
-    for(time=0;time<toPrint.totalTime+1;time++){
+    for(time=0;time<toPrint.totalTime+1;time++)
+    {
         if(time<=9) printf("%d    ",time);
         else printf("%d   ",time);
     }
@@ -47,16 +50,19 @@ void print_Gantt(Gantt toPrint){
     printf("%s:|",toPrint.algorithm_name);
     //Print Gantt chart (times and processes)
     int y,k,z,e,t;
-    for(y=0;y<toPrint.totalTime;y++){
+    for(y=0;y<toPrint.totalTime;y++)
+    {
         printf(" %s |",toPrint.states[y].name);
     }
     printf("\n");
     //Print ReadyQueues
     printf("\nReady Queue:\n");
     int o,l;
-    for(o=0;o<toPrint.numberOfProcesses-1;o++){
+    for(o=0;o<toPrint.numberOfProcesses-1;o++)
+    {
         printf("|");
-        for(l=0;l<toPrint.totalTime;l++){
+        for(l=0;l<toPrint.totalTime;l++)
+        {
             printf(" %s  | ",toPrint.queues[l].processes_waiting[o].name);
         }
         printf("\n");
@@ -64,31 +70,38 @@ void print_Gantt(Gantt toPrint){
     //Print Virtual CPUS
     printf("\nVirtual CPUs:\n");
     int first,w;
-    for(first=0;first<toPrint.numberOfProcesses;first++){
+    for(first=0;first<toPrint.numberOfProcesses;first++)
+    {
         printf("Virtual CPU %s: |",toPrint.different_processes[first].name);
-        for(w=0;w<toPrint.totalTime;w++){
+        for(w=0;w<toPrint.totalTime;w++)
+        {
             printf("  %s  |",toPrint.cpus[first].processes[w].name);
         }
         printf("\n");
     }
     //Print first row with process's names
     printf("\n\n| Time |");
-    for(k=0;k<toPrint.numberOfProcesses;k++){
+    for(k=0;k<toPrint.numberOfProcesses;k++)
+    {
         printf("  %s  |",toPrint.different_processes[k].name);
     }
     //Print second row containing waiting times
     printf("\n|  WT  |");
-    for(z=0;z<toPrint.numberOfProcesses;z++){
-        if(toPrint.waiting_times[z] > 9){
+    for(z=0;z<toPrint.numberOfProcesses;z++)
+    {
+        if(toPrint.waiting_times[z] > 9)
+        {
             printf("  %d  |",toPrint.waiting_times[z]);
         }
         else printf("  %d   |",toPrint.waiting_times[z]);
     }
     //Print third row containing turn-around times
     printf("\n|  TA  |");
-    for(e=0;e<toPrint.numberOfProcesses;e++){
+    for(e=0;e<toPrint.numberOfProcesses;e++)
+    {
         //Check if time>9 to adjust boundaries for print
-        if(toPrint.ta_times[e] > 9){
+        if(toPrint.ta_times[e] > 9)
+        {
             printf("  %d  |",toPrint.ta_times[e]);
         }
         else printf("  %d   |",toPrint.ta_times[e]);
@@ -100,7 +113,8 @@ void print_Gantt(Gantt toPrint){
     }
     printf("\n\n");
 }
-Gantt initGantt(Gantt toInit,int noProcesses,Process processes[]){
+Gantt initGantt(Gantt toInit,int noProcesses,Process processes[])
+{
     //Setting number of processes to the number given by the user
     toInit.numberOfProcesses = noProcesses;
     //Malloc memory for array of times for all processes
@@ -114,7 +128,8 @@ Gantt initGantt(Gantt toInit,int noProcesses,Process processes[]){
     toInit.different_processes = malloc(noProcesses*sizeof(Process));
     int r,y,t,x;
     toInit.totalTime = 0;
-    for(t=0;t<noProcesses;t++){
+    for(t=0;t<noProcesses;t++)
+    {
         //Entering all different processes used
         toInit.different_processes[t] = processes[t];
         //Calculating total runtime of all processes
@@ -134,11 +149,13 @@ Gantt initGantt(Gantt toInit,int noProcesses,Process processes[]){
         strcpy(toInit.states[x].name,"::");
     }
     //Initialize virtual CPUs
-    for(y=0;y<noProcesses;y++){
+    for(y=0;y<noProcesses;y++)
+    {
         toInit.cpus[y] = initVirtualCPU(toInit.cpus[y],toInit.totalTime);
     }
     //Initialize queues
-    for(r=0;r<toInit.totalTime;r++){
+    for(r=0;r<toInit.totalTime;r++)
+    {
         toInit.queues[r] = initializeQueue(toInit.queues[r],toInit.numberOfProcesses);
     }
     return toInit;

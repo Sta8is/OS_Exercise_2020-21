@@ -7,7 +7,8 @@
 #define FUNCTIONS_H
 #include "functions.h"
 #endif
-Gantt createRoundRobin(Process processes[],int numberOfProcesses,int timeQuantum){
+Gantt createRoundRobin(Process processes[],int numberOfProcesses,int timeQuantum)
+{
     Gantt temp;
     //Initializing empty gantt chart
     temp = initGantt(temp,numberOfProcesses,processes);
@@ -20,7 +21,8 @@ Gantt createRoundRobin(Process processes[],int numberOfProcesses,int timeQuantum
     //First_times is array of value each process first entered CPU(updated to normal value later on programm)
     int arrive_times[numberOfProcesses],burst_times[numberOfProcesses],copyBurst[numberOfProcesses],first_times[numberOfProcesses];
     //Update values for arrays declared previously
-    for(k=0;k<numberOfProcesses;k++){
+    for(k=0;k<numberOfProcesses;k++)
+    {
         arrive_times[k] = processes[k].arrive_time;
         burst_times[k] = processes[k].burst_time;
         copyBurst[k] = burst_times[k];
@@ -34,9 +36,11 @@ Gantt createRoundRobin(Process processes[],int numberOfProcesses,int timeQuantum
         //Initialize value of next for the next "i"
         int next= -1;
         //Case 1: process has remaining burst_time smaller or equal to time quantum
-        if(burst_times[i] <= timeQuantum && burst_times[i] > 0){
+        if(burst_times[i] <= timeQuantum && burst_times[i] > 0)
+        {
             //Check first_times to see if process has entered CPU before
-            if(first_times[i] < 0){
+            if(first_times[i] < 0)
+            {
                 //If not, set it to current time
                 first_times[i] = time;
             }
@@ -44,7 +48,8 @@ Gantt createRoundRobin(Process processes[],int numberOfProcesses,int timeQuantum
             //Variable to remove process only once(changed to 1 if current process is removed from queue)
             int change = 0;
             //Loop to repeat for remaining burst_time of process
-            for(k=0;k<burst_times[i];k++){
+            for(k=0;k<burst_times[i];k++)
+            {
                 //Check time isn't zero
                 if(time !=0){
                     int theta;
@@ -72,7 +77,8 @@ Gantt createRoundRobin(Process processes[],int numberOfProcesses,int timeQuantum
                 //Procedure for check of the rest processes
                 int q;
                 //Loop for all processes
-                for(q=0;q<numberOfProcesses;q++){
+                for(q=0;q<numberOfProcesses;q++)
+                {
                     //If a new process has arrived and it's the first time to appear then => the process is waiting and entered in the queue
                     if(arrive_times[q]<= time && q != i && burst_times[q] !=0 && first_times[q]<0){
                         strcpy(temp.cpus[q].processes[time].name,"W");
@@ -110,7 +116,8 @@ Gantt createRoundRobin(Process processes[],int numberOfProcesses,int timeQuantum
             counter = 1;
         }
         //Case 2: process has remaining burst_time > time Quantum and also zero(isn't finished)
-        else if(burst_times[i] > 0){
+        else if(burst_times[i] > 0)
+        {
             //Update value of remaing burst_time of current process
             burst_times[i] = burst_times[i] - timeQuantum;
             int u;
@@ -122,7 +129,8 @@ Gantt createRoundRobin(Process processes[],int numberOfProcesses,int timeQuantum
             //As previously, variable "change" is used to determine if previous
             //process is removed (originally set to 0)
             int change = 0;
-            for(u=0;u<timeQuantum;u++){
+            for(u=0;u<timeQuantum;u++)
+            {
                 //Update states and virtualCPU to using
                 strcpy(temp.states[time].name,processes[i].name);
                 strcpy(temp.cpus[i].processes[time].name,"U");
@@ -149,7 +157,8 @@ Gantt createRoundRobin(Process processes[],int numberOfProcesses,int timeQuantum
                     }
                 }
                 //Procedure to check for the rest of the processes
-                for(w=0;w<numberOfProcesses;w++){
+                for(w=0;w<numberOfProcesses;w++)
+                {
                     //If a process has arrived, isn't finished and hasn't entered the CPU previously
                     if(arrive_times[w]<= time && w!=i && burst_times[w] !=0 && first_times[w]<0){
                         //Update value of virtualCPU to W for waiting
@@ -188,7 +197,8 @@ Gantt createRoundRobin(Process processes[],int numberOfProcesses,int timeQuantum
             temp.number_of_changes[i]++;
         }
         //If a process is done
-        if(burst_times[i] == 0 && counter == 1){
+        if(burst_times[i] == 0 && counter == 1)
+        {
             //Decrement number of processes remaining for the algorithm to finish
             x--;
             //Calculate times of each process
@@ -204,7 +214,8 @@ Gantt createRoundRobin(Process processes[],int numberOfProcesses,int timeQuantum
             }
         }
         //If next is >= 0 set i to next
-        if(next>=0){
+        if(next>=0)
+        {
             i = next;
         }
         //Else continue algorithm with the previous process

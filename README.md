@@ -5,8 +5,7 @@ processes based on different algorithms, 4 to be precise. The 4 algorithms
 are FCFS(First Come First Serve, Pre Emptive, Round Robin and Shortest Remaing Time).
 The theory behind all these is on the other markdown file so if you have any questions
 refer to that.
-*All files are based on C programming language.
 
 Members:
-Pantazis Anagnostou
+Pantazis Anagnostou,
 Efstathios Karypidis

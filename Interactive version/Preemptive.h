@@ -26,16 +26,19 @@ Gantt preEmptive(Process processes[],int numberOfProcesses){
     //Setting lowest Priority
     priorities[numberOfProcesses] = 0;
     int previous = 5;
-    for(time=0; count<numberOfProcesses; time++){
+    for(time=0; count<numberOfProcesses; time++)
+    {
         //Index of smallest priority in processes
         smallest=numberOfProcesses;
-        for(i=0; i<numberOfProcesses; i++){
+        for(i=0; i<numberOfProcesses; i++)
+        {
             //Check for smallest arrive time and if it has higher priority. also check burst_time > 0 so the process isnt over yet
             if(arrive_times[i]<=time && priorities[i]>priorities[smallest] && burst_times[i]>0 ){
                 smallest=i;
             }
         }
-        if(first_times[smallest] <0) {
+        if(first_times[smallest] <0) 
+        {
             //Initialize first time process entered cpu and set number of changes to zero
             first_times[smallest] = time;
             number_changes[smallest] = 0;
@@ -54,12 +57,14 @@ Gantt preEmptive(Process processes[],int numberOfProcesses){
             }
         }
         //If current process != previous increment number of changes for current process
-        if(previous != smallest){
+        if(previous != smallest)
+        {
             number_changes[smallest]++;
         }
         //If a process has arrived, isn't finished and has entered CPU before update to sleeping
         int u;
-        for(u=0;u<numberOfProcesses;u++){
+        for(u=0;u<numberOfProcesses;u++)
+        {
             if (u != smallest && arrive_times[u] <= time && first_times[u] >= 0 && burst_times[u] != 0){
                 strcpy(tmp.queues[time].processes_waiting[index].name,processes[u].name);
                 tmp.queues[time].processes_waiting[index].priority = processes[u].priority;
@@ -76,8 +81,10 @@ Gantt preEmptive(Process processes[],int numberOfProcesses){
         strcpy(tmp.states[time].name,processes[smallest].name);
         //Sort queue to highest priority
         int c,d;
-        for (c = 0 ; c < numberOfProcesses - 1; c++){
-            for (d = 0 ; d < numberOfProcesses - c - 1; d++){
+        for (c = 0 ; c < numberOfProcesses - 1; c++)
+        {
+            for (d = 0 ; d < numberOfProcesses - c - 1; d++)
+            {
                 //Empty temp character to store name
                 char tempChar[3] = "";
                 int tempPriority;
@@ -94,7 +101,8 @@ Gantt preEmptive(Process processes[],int numberOfProcesses){
             }
         }
         //Enter if, if a process is finished
-        if(burst_times[smallest]==0){
+        if(burst_times[smallest]==0)
+        {
             //Increase count so that one process is done and move to find next one
             count++;
             end=time+1;

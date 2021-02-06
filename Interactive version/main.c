@@ -15,7 +15,8 @@
 #define SRTF_H
 #include "srtf.h"
 #endif // SRTF_H
-int main(){
+int main()
+{
     //Initialize empty processes
     int numberOfProcesses;
     printf("Enter number of processes:");
@@ -24,7 +25,8 @@ int main(){
     Process *arxiko;
     arxiko = malloc(numberOfProcesses*sizeof(Process));
     memset(arxiko,0,numberOfProcesses);
-    for(count = 0; count<numberOfProcesses;count++){
+    for(count = 0; count<numberOfProcesses;count++)
+    {
         printf("Enter name of process:");
         int length;
         char name[3];
