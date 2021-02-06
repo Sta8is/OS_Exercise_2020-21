@@ -26,7 +26,7 @@ Gantt create_srtf(Process processes[],int numberOfProcesses)
         priorities[k] = processes[k].priority;
         first_times[k] = -1;
     }
-    //temp process for the first condition
+    //Τemp process for the first condition
     burst_times[numberOfProcesses] = 9999;
     priorities[numberOfProcesses] = 0;
     int previous = 5;
@@ -37,7 +37,7 @@ Gantt create_srtf(Process processes[],int numberOfProcesses)
         for(i=0; i<numberOfProcesses; i++)
         {
             //Check for smallest arrive time and if it has shortest burst time. also check burst_time > 0 so the process isnt over yet
-            if(arrive_times[i]<=time && burst_times[i]>0 )
+            if(arrive_times[i]<=time && burst_times[i]>0)
             {
                 //check if ne
                 if(burst_times[i]<burst_times[shortest])
@@ -81,7 +81,8 @@ Gantt create_srtf(Process processes[],int numberOfProcesses)
         int u;
         for(u=0;u<numberOfProcesses;u++)
         {
-            if (u != shortest && arrive_times[u] <= time && first_times[u] >= 0 && burst_times[u] != 0){
+            if (u != shortest && arrive_times[u] <= time && first_times[u] >= 0 && burst_times[u] != 0)
+            {
                 //Add to queue "sleeping" process and its remaining burst_time(Later used in sorting)
                 strcpy(temp.queues[time].processes_waiting[index].name, processes[u].name);
                 temp.queues[time].processes_waiting[index].burst_time = burst_times[u];
@@ -94,12 +95,15 @@ Gantt create_srtf(Process processes[],int numberOfProcesses)
         }
         //Bubble sort based on smallest burst time
         int c,d;
-        for (c = 0 ; c < numberOfProcesses - 1; c++){
-            for (d = 0 ; d < numberOfProcesses - c - 1; d++){
+        for (c = 0 ; c < numberOfProcesses - 1; c++)
+        {
+            for (d = 0 ; d < numberOfProcesses - c - 1; d++)
+            {
                 //Empty temp character to store name
                 char tempChar[3] = "";
                 int tempBurst;
-                if (temp.queues[time].processes_waiting[d].burst_time > temp.queues[time].processes_waiting[d+1].burst_time){
+                if (temp.queues[time].processes_waiting[d].burst_time > temp.queues[time].processes_waiting[d+1].burst_time)
+                {
                     //Swapping processes
                     /*tempBurst = temp.queues[time].processes_waiting[d].burst_time;
                     temp.queues[time].processes_waiting[d].burst_time = temp.queues[time].processes_waiting[d+1].burst_time;

@@ -6,7 +6,8 @@
 typedef struct virtualCPU{
     Process *processes;
 }virtualCPU;
-virtualCPU initVirtualCPU(virtualCPU toInit,int totalTime){
+virtualCPU initVirtualCPU(virtualCPU toInit,int totalTime)
+{
     int i;
     toInit.processes = malloc(totalTime*sizeof(Process));
     for(i=0;i<totalTime;i++){
