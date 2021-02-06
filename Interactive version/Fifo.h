@@ -78,6 +78,17 @@ Gantt create_fifo(Process processes[],int numberOfProcesses)
         }
 
     }
+    //Initializing sums
+    float sum = 0,sum2=0;
+    int r;
+    //Calculate sum of waiting_times and ta_times
+    for(r=0;r<numberOfProcesses;r++){
+        sum = sum + fifo.waiting_times[r];
+        sum2 = sum2 + fifo.ta_times[r];
+    }
+    //Divide with number of processes
+    fifo.avg_ta_time = sum2/numberOfProcesses;
+    fifo.avg_waiting_time = sum/numberOfProcesses;
     //Return struct(Gantt) fifo
     return fifo;
 }

@@ -133,6 +133,17 @@ Gantt create_srtf(Process processes[],int numberOfProcesses)
         //Update previous process to keep number of process changes
         previous = shortest;
     }
+     //Initializing sums
+    float sum = 0,sum2=0;
+    int r;
+    //Calculate sum of waiting_times and ta_times
+    for(r=0;r<numberOfProcesses;r++){
+        sum = sum + temp.waiting_times[r];
+        sum2 = sum2 + temp.ta_times[r];
+    }
+    //Divide with number of processes
+    temp.avg_ta_time = sum2/numberOfProcesses;
+    temp.avg_waiting_time = sum/numberOfProcesses;
     //Return struct(Gantt) tmp containing the full chart.
     return temp;
 }

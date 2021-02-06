@@ -221,6 +221,17 @@ Gantt createRoundRobin(Process processes[],int numberOfProcesses,int timeQuantum
         //Else continue algorithm with the previous process
         else i = previous;
     }
+     //Initializing sums
+    float sum = 0,sum2=0;
+    int r;
+    //Calculate sum of waiting_times and ta_times
+    for(r=0;r<numberOfProcesses;r++){
+        sum = sum + temp.waiting_times[r];
+        sum2 = sum2 + temp.ta_times[r];
+    }
+    //Divide with number of processes
+    temp.avg_ta_time = sum2/numberOfProcesses;
+    temp.avg_waiting_time = sum/numberOfProcesses;
     //Return gantt chart
     return temp;
 }

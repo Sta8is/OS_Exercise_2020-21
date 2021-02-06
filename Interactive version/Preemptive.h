@@ -114,6 +114,17 @@ Gantt preEmptive(Process processes[],int numberOfProcesses){
         //Update previous process to keep number of process changes
         previous = smallest;
     }
+     //Initializing sums
+    float sum = 0,sum2=0;
+    int r;
+    //Calculate sum of waiting_times and ta_times
+    for(r=0;r<numberOfProcesses;r++){
+        sum = sum + tmp.waiting_times[r];
+        sum2 = sum2 + tmp.ta_times[r];
+    }
+    //Divide with number of processes
+    tmp.avg_ta_time = sum2/numberOfProcesses;
+    tmp.avg_waiting_time = sum/numberOfProcesses;
     //Return struct(Gantt) tmp containing the full chart.
     return tmp;
 }

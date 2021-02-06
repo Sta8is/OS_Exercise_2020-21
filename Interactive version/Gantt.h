@@ -29,6 +29,10 @@ typedef struct Gantt
     int *number_of_changes;
     //Name of algorithm used for print function later
     char algorithm_name[5];
+    //Average waiting time
+    float avg_waiting_time;
+    //Average trunaround_time
+    float avg_ta_time;
     //Ready queues(each one represents ready queue at specific time)
     ReadyQueue *queues;
     //Virtual CPUs (each one for each process)
@@ -111,7 +115,10 @@ void print_Gantt(Gantt toPrint)
     for(t=0;t<toPrint.numberOfProcesses;t++){
         printf("  %d   |",toPrint.number_of_changes[t]);
     }
+    printf("\n\nAverage Waiting Time: %.2f",toPrint.avg_waiting_time);
+    printf("\nAverage Turnaround Time: %.2f",toPrint.avg_ta_time);
     printf("\n\n");
+
 }
 Gantt initGantt(Gantt toInit,int noProcesses,Process processes[])
 {
@@ -158,5 +165,7 @@ Gantt initGantt(Gantt toInit,int noProcesses,Process processes[])
     {
         toInit.queues[r] = initializeQueue(toInit.queues[r],toInit.numberOfProcesses);
     }
+    toInit.avg_ta_time = 0;
+    toInit.avg_waiting_time = 0;
     return toInit;
 }
