@@ -97,14 +97,13 @@ Gantt createRoundRobin(Process processes[],int numberOfProcesses,int timeQuantum
                             temp.queues[time].lastIndex++;
                         }
                     }
-                    //The whole procedure is linear so the previous used process must be put last,
-                    //if it's not complete yet. If a new process arrives later then that process is put last
-                    if(previous >= 0 && previous != i && searchQueue(temp.queues[time],processes[previous],numberOfProcesses) == 0 && burst_times[previous] != 0){
-                        strcpy(temp.queues[time].processes_waiting[temp.queues[time].lastIndex].name,processes[previous].name);
-                        //Increment lastIndex
-                        temp.queues[time].lastIndex++;
-                    }
-
+                }
+                //The whole procedure is linear so the previous used process must be put last,
+                //if it's not complete yet. If a new process arrives later then that process is put last
+                if(previous >= 0 && previous != i && searchQueue(temp.queues[time],processes[previous],numberOfProcesses) == 0 && burst_times[previous] != 0){
+                    strcpy(temp.queues[time].processes_waiting[temp.queues[time].lastIndex].name,processes[previous].name);
+                    //Increment lastIndex
+                    temp.queues[time].lastIndex++;
                 }
                 //Update the "previous" variable to our current i
                 previous = i;
@@ -163,7 +162,7 @@ Gantt createRoundRobin(Process processes[],int numberOfProcesses,int timeQuantum
                     if(arrive_times[w]<= time && w!=i && burst_times[w] !=0 && first_times[w]<0){
                         //Update value of virtualCPU to W for waiting
                         strcpy(temp.cpus[w].processes[time].name,"W");
-                        if(w != previous &&searchQueue(temp.queues[time],processes[w],numberOfProcesses) == 0 && time !=0){
+                        if(w != previous && searchQueue(temp.queues[time],processes[w],numberOfProcesses) == 0 && time !=0){
                             //Add process to queue
                             strcpy(temp.queues[time].processes_waiting[temp.queues[time].lastIndex].name,processes[w].name);
                             //Increment lastIndex of queue
@@ -181,20 +180,19 @@ Gantt createRoundRobin(Process processes[],int numberOfProcesses,int timeQuantum
                             temp.queues[time].lastIndex++;
                         }
                     }
-                    if(previous >= 0 && previous != i && searchQueue(temp.queues[time],processes[previous],numberOfProcesses) == 0 && burst_times[previous] != 0){
+
+                }
+                if(previous >= 0 && previous != i && searchQueue(temp.queues[time],processes[previous],numberOfProcesses) == 0 && burst_times[previous] != 0){
                         //Add process to queue
                         strcpy(temp.queues[time].processes_waiting[temp.queues[time].lastIndex].name,processes[previous].name);
                         //Increment value of lastIndex
                         temp.queues[time].lastIndex++;
-                    }
                 }
                 //Update value of  variable "previous" to our current i
                 previous = i;
                 //Increment time by one
                 time++;
             }
-            //After process is done(not finished), increment number of changes of current process
-            temp.number_of_changes[i]++;
         }
         //If a process is done
         if(burst_times[i] == 0 && counter == 1)
@@ -216,6 +214,8 @@ Gantt createRoundRobin(Process processes[],int numberOfProcesses,int timeQuantum
         //If next is >= 0 set i to next
         if(next>=0)
         {
+            //After process is done(not finished), increment number of changes of current process
+            if(burst_times[i] !=0) temp.number_of_changes[i]++;
             i = next;
         }
         //Else continue algorithm with the previous process
