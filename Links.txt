@@ -1,14 +1,14 @@
 Preemptive Algorithm:
 1) https://japp.io/algorithms/os-scheduling/priority-scheduling-preemptive-algorithm-program-in-c-c/
-2) https://cppsecrets.com/users/130697109105116981051151041169798575364103109971051084699111109/C00-Program-of-Priority-Schedulingpreemptive.php  (Διαμόρφωση αυτού του κώδικα για εργασία)
-3)https://shivammitra.com/operating%20system/preemptive-priority-program/   Link από τιτο(srtf,preemtive) 
+2) https://cppsecrets.com/users/130697109105116981051151041169798575364103109971051084699111109/C00-Program-of-Priority-Schedulingpreemptive.php  
+3)https://shivammitra.com/operating%20system/preemptive-priority-program/  
 + github https://github.com/codophobia/process-scheduling-algorithms
 4)https://afteracademy.com/blog/what-is-burst-arrival-exit-response-waiting-turnaround-time-and-throughput    Usefull Definitions - Theoretical Part
 5)https://www.tutorialspoint.com/operating_system/os_process_scheduling_algorithms.htm  
 6)https://www.javatpoint.com/os-scheduling-algorithms
 7)https://www.guru99.com/fcfs-scheduling.html
-8)https://www.guru99.com/priority-scheduling-program.html      (preemtive)
+8)https://www.guru99.com/priority-scheduling-program.html      
 9)https://www.geeksforgeeks.org/introduction-of-shortest-remaining-time-first-srtf-algorithm/     
-10) https://cppsecrets.com/users/130697109105116981051151041169798575364103109971051084699111109/C00-Program-of-Shortest-Remaining-Time-FirstSRTF-Scheduling.php   κώδικας για srtf
+10) https://cppsecrets.com/users/130697109105116981051151041169798575364103109971051084699111109/C00-Program-of-Shortest-Remaining-Time-FirstSRTF-Scheduling.php   
 11)https://openclass.teiwm.gr/modules/document/file.php/EE104/%CE%95%CE%BD%CF%8C%CF%84%CE%B7%CF%84%CE%B1%205.%20%CE%94%CE%B9%CE%B5%CF%81%CE%B3%CE%B1%CF%83%CE%AF%CE%B5%CF%82%20%CE%99%CE%99%CE%99.pdf
 12)http://www.eng.ucy.ac.cy/christos/courses/ece313/Lectures/Scheduling.pdf
